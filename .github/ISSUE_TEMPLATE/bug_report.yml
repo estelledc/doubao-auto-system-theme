@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a Doubao dark mode display problem
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please avoid posting private chat content. Mask avatars, names, enterprise info, and sensitive messages in screenshots.
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      description: Example: Chrome 126
+    validations:
+      required: true
+  - type: input
+    id: tampermonkey
+    attributes:
+      label: Tampermonkey version
+      description: Example: 5.1.1
+    validations:
+      required: true
+  - type: dropdown
+    id: system-theme
+    attributes:
+      label: System theme
+      options:
+        - Dark
+        - Light
+        - Auto / changed during use
+    validations:
+      required: true
+  - type: input
+    id: script-version
+    attributes:
+      label: Script version
+      description: Open Tampermonkey dashboard or run __doubaoThemeAudit().version.
+      placeholder: 5.1.0
+    validations:
+      required: true
+  - type: input
+    id: doubao-url
+    attributes:
+      label: Doubao page URL
+      description: Please remove private query parameters if any.
+      placeholder: https://www.doubao.com/chat/...
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+      description: Tell us which area is hard to read or still white.
+      placeholder: Example: The code block header is still white in dark mode.
+    validations:
+      required: true
+  - type: textarea
+    id: audit
+    attributes:
+      label: __doubaoThemeAudit() output
+      description: Open DevTools console, run __doubaoThemeAudit(), and paste the result.
+      render: json
+    validations:
+      required: false
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Drag screenshots here after masking private content.
+    validations:
+      required: false
+
