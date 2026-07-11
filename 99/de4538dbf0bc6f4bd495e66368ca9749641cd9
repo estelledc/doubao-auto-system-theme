@@ -1,0 +1,53 @@
+.github/workflows/pages.yml
+  s_dbb42d02a901b2::t_0136bb450d7452 1-59
+.github/workflows/quality.yml
+  s_dbb42d02a901b2::t_a86675cb743357 1-40
+.gitignore
+  s_dbb42d02a901b2::t_574faa365c2d96 5-7
+README.md
+  s_dbb42d02a901b2::t_79de36b4cc30b0 3,5-23,27,29,31-34,36,38-42,47,50-53,55-58,60,62-64,66,68-70,72-91,95,97,99-100,102,104,106
+assets/favicon.svg
+  s_dbb42d02a901b2::t_61c738b9144299 1-6
+assets/jx/VERSION
+  s_dbb42d02a901b2::t_07051b8f634b1c 1
+assets/jx/base.css
+  s_dbb42d02a901b2::t_020cdce570a6ed 1-165
+assets/jx/components.css
+  s_dbb42d02a901b2::t_9972cecc45ea8d 1-590
+assets/jx/tokens.css
+  s_dbb42d02a901b2::t_919faffb3ad0e2 1-184
+assets/showcase.css
+  s_dbb42d02a901b2::t_1c50788ce9c58e 1-901
+assets/showcase.js
+  s_dbb42d02a901b2::t_4fe1a9a10a97e1 1-15
+index.html
+  s_dbb42d02a901b2::t_9185988edb20a1 1-276
+robots.txt
+  s_dbb42d02a901b2::t_3b7c171cc31247 1-4
+scripts/build_site.py
+  s_dbb42d02a901b2::t_a91db36964f94e 1-31
+scripts/check_showcase.py
+  s_dbb42d02a901b2::t_cac696e65f8002 1-229
+scripts/generate_og.py
+  s_dbb42d02a901b2::t_0002e22887b341 1-83
+sitemap.xml
+  s_dbb42d02a901b2::t_a1ec9930fb3017 1-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "99de4538dbf0bc6f4bd495e66368ca9749641cd9",
+  "prompts": {},
+  "sessions": {
+    "s_dbb42d02a901b2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_dbb42d02a901b2",
+        "model": "unknown"
+      },
+      "human_author": "Jason <150260202+estelledc@users.noreply.github.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
