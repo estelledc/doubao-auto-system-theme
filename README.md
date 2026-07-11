@@ -76,12 +76,13 @@ python3 -m http.server 8000
 ```sh
 node --check doubao-auto-system-theme.user.js
 node --check assets/showcase.js
+node --test tests/*.test.mjs
 python3 scripts/check_showcase.py
 python3 scripts/build_site.py
 python3 scripts/check_showcase.py --built
 ```
 
-`check_showcase.py` 会验证：案例结构、SEO/JSON-LD、资源链接、1200×630 分享图、Jason DS v2、userscript 事实、隐私声明，以及所有第三方 GitHub Actions 是否固定到完整 commit SHA。
+`check_showcase.py` 会验证：案例与 404 结构、SEO/JSON-LD、资源链接、1200×630 分享图、Jason DS v2、userscript 事实、隐私声明、STALE 行为测试是否进入 CI，以及所有第三方 GitHub Actions 是否固定到完整 commit SHA。
 
 分享图可选重生成：
 

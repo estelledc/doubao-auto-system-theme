@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#101314" />
+    <meta name="author" content="Jason Xun" />
+    <meta name="color-scheme" content="light" />
     <meta
       name="description"
       content="豆包网页主题适配器公开案例：跟随系统深浅色、修复主题漂移，并用页面内审计检查侧栏、正文与代码块可读性。"
@@ -44,30 +46,34 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Doubao Web Auto Dark Mode",
-        "alternateName": "豆包网页版自动深色模式",
-        "url": "https://estelledc.github.io/doubao-auto-system-theme/",
-        "downloadUrl": "https://github.com/estelledc/doubao-auto-system-theme/blob/main/doubao-auto-system-theme.user.js",
-        "softwareVersion": "1.0.0",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "Chrome with Tampermonkey",
-        "isAccessibleForFree": true,
-        "inLanguage": ["zh-CN", "en"],
-        "author": {
-          "@type": "Organization",
-          "name": "Doubao Web Dark Mode Contributors",
-          "url": "https://github.com/estelledc/doubao-auto-system-theme"
-        },
-        "contributor": {
-          "@type": "Person",
-          "name": "Jason Xun",
-          "url": "https://estelledc.github.io/"
-        },
-        "license": "https://opensource.org/license/mit"
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://estelledc.github.io/#person",
+            "name": "Jason Xun",
+            "url": "https://estelledc.github.io/about/",
+            "sameAs": "https://github.com/estelledc"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://estelledc.github.io/doubao-auto-system-theme/#software",
+            "name": "Doubao Web Auto Dark Mode",
+            "alternateName": "豆包网页版自动深色模式",
+            "url": "https://estelledc.github.io/doubao-auto-system-theme/",
+            "downloadUrl": "https://github.com/estelledc/doubao-auto-system-theme/blob/main/doubao-auto-system-theme.user.js",
+            "softwareVersion": "1.0.0",
+            "applicationCategory": "BrowserApplication",
+            "operatingSystem": "Chrome with Tampermonkey",
+            "isAccessibleForFree": true,
+            "inLanguage": ["zh-CN", "en"],
+            "author": {"@id": "https://estelledc.github.io/#person"},
+            "license": "https://opensource.org/license/mit",
+            "dateModified": "2026-07-11"
+          }
+        ]
       }
     </script>
-    <script defer src="assets/showcase.js"></script>
+    <script defer src="assets/showcase.js?v=20260711-2"></script>
   </head>
   <body>
     <a class="jx-skip-link" href="#main">跳到主要内容</a>
@@ -121,7 +127,10 @@
         <div class="signal-panel" data-demo-theme="dark" aria-label="主题适配链路交互示意">
           <div class="signal-panel__bar">
             <span>THEME ADAPTER / LIVE SCHEMATIC</span>
-            <button type="button" data-demo-toggle aria-pressed="true">Dark signal</button>
+            <div class="signal-controls">
+              <button type="button" data-demo-toggle aria-pressed="true">Dark signal</button>
+              <button type="button" data-run-audit hidden>Run demo audit</button>
+            </div>
           </div>
           <div class="signal-route" aria-hidden="true">
             <div><small>01 / sense</small><strong>prefers-color-scheme</strong><span class="signal-dot"></span></div>
@@ -129,17 +138,43 @@
             <div><small>03 / repair</small><strong>scoped UI surfaces</strong><span class="signal-dot"></span></div>
             <div><small>04 / audit</small><strong>contrast evidence</strong><span class="signal-dot"></span></div>
           </div>
-          <div class="surface-preview">
-            <aside>
-              <i></i><i></i><i></i><i></i>
+          <div class="surface-preview" data-audit-root>
+            <aside data-audit-surface="sidebar">
+              <i data-audit-item></i><i data-audit-item></i><i data-audit-item></i><i data-audit-item></i>
             </aside>
-            <article>
+            <article data-audit-surface="markdown">
               <span>Readable answer surface</span>
               <h2>系统主题已同步</h2>
               <p>正文、引用、表格与行内代码使用各自的语义颜色，而不是全局反色。</p>
-              <pre><code>audit.codeBlocks → pass</code></pre>
+              <pre data-audit-surface="code"><code>audit.codeBlocks → pass</code></pre>
             </article>
           </div>
+          <section class="demo-audit" aria-labelledby="demo-audit-title">
+            <header>
+              <div><span>DEMO DOM AUDIT</span><strong id="demo-audit-title">读取当前示例 DOM，不回放预设结果。</strong></div>
+              <output data-audit-status aria-live="polite">NOT RUN</output>
+            </header>
+            <dl class="demo-audit__meta">
+              <div><dt>SCRIPT</dt><dd>v1.0.0</dd></div>
+              <div><dt>LAST COMPAT VERIFY</dt><dd>2026-07-11 · static contract only</dd></div>
+              <div><dt>LIVE DOUBAO</dt><dd><span data-status="unknown">UNKNOWN</span> · no logged-in run</dd></div>
+              <div><dt>FAILURE STATE</dt><dd><span data-status="degraded">DEGRADED</span> when selectors drift</dd></div>
+            </dl>
+            <div class="demo-audit__table-wrap">
+              <table>
+                <caption>当前示例界面的五个审计表面</caption>
+                <thead><tr><th scope="col">Check</th><th scope="col">Observed</th><th scope="col">State</th></tr></thead>
+                <tbody data-audit-results>
+                  <tr><th scope="row">sidebarItems</th><td>等待读取 DOM</td><td><span data-status="unknown">UNKNOWN</span></td></tr>
+                  <tr><th scope="row">markdownText</th><td>等待计算文本对比度</td><td><span data-status="unknown">UNKNOWN</span></td></tr>
+                  <tr><th scope="row">darkTextIslands</th><td>等待扫描低对比文字</td><td><span data-status="unknown">UNKNOWN</span></td></tr>
+                  <tr><th scope="row">codeBlocks</th><td>等待读取代码表面</td><td><span data-status="unknown">UNKNOWN</span></td></tr>
+                  <tr><th scope="row">lightIslands</th><td>等待扫描主题泄漏</td><td><span data-status="unknown">UNKNOWN</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <noscript><p class="demo-audit__noscript">JavaScript 未启用：示例 DOM 与静态合同仍可阅读；动态审计表保持 UNKNOWN，不伪造 PASS。</p></noscript>
+          </section>
         </div>
       </section>
 

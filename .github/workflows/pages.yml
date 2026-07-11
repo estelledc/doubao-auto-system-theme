@@ -34,6 +34,7 @@ jobs:
         run: |
           node --check doubao-auto-system-theme.user.js
           node --check assets/showcase.js
+          node --test tests/*.test.mjs
           python3 scripts/check_showcase.py
 
       - name: Build explicit Pages artifact

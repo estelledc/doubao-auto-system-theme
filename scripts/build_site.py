@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
 ROOT_FILES = (
     "index.html",
+    "404.html",
     "robots.txt",
     "sitemap.xml",
     "doubao-auto-system-theme.user.js",

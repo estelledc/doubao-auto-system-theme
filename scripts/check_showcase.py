@@ -29,6 +29,7 @@ class Signals(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.ids: set[str] = set()
+        self.tag_counts: dict[str, int] = {}
         self.hrefs: list[str] = []
         self.srcs: list[str] = []
         self.canonicals: list[str] = []
@@ -37,6 +38,7 @@ class Signals(HTMLParser):
         self._json_buffer: list[str] | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.tag_counts[tag] = self.tag_counts.get(tag, 0) + 1
         values = {key: value or "" for key, value in attrs}
         if values.get("id"):
             self.ids.add(values["id"])
@@ -121,10 +123,17 @@ def check_page(base: Path, errors: list[str]) -> None:
         except json.JSONDecodeError as exc:
             errors.append(f"invalid JSON-LD: {exc}")
         else:
-            expected = {"@type": "SoftwareApplication", "softwareVersion": "1.0.0", "isAccessibleForFree": True}
+            graph = payload.get("@graph", [])
+            software = next((item for item in graph if item.get("@type") == "SoftwareApplication"), {})
+            person = next((item for item in graph if item.get("@type") == "Person"), {})
+            expected = {"softwareVersion": "1.0.0", "isAccessibleForFree": True}
             for key, value in expected.items():
-                if payload.get(key) != value:
+                if software.get(key) != value:
                     errors.append(f"JSON-LD {key} mismatch")
+            if person.get("@id") != "https://estelledc.github.io/#person" or person.get("name") != "Jason Xun":
+                errors.append("JSON-LD shared Jason Xun #person identity mismatch")
+            if software.get("author", {}).get("@id") != "https://estelledc.github.io/#person":
+                errors.append("JSON-LD software author does not reference #person")
     for reference in signals.hrefs + signals.srcs:
         target = local_target(base, reference)
         if target and not target.exists():
@@ -135,9 +144,56 @@ def check_page(base: Path, errors: list[str]) -> None:
         "@grant none",
         "非官方用户脚本",
         "不读取、保存或上传聊天内容",
+        "Run demo audit",
+        "DEMO DOM AUDIT",
+        "LAST COMPAT VERIFY",
+        "2026-07-11 · static contract only",
+        "LIVE DOUBAO",
+        "UNKNOWN",
+        "DEGRADED",
+        "JavaScript 未启用",
     ):
         if marker not in source:
             errors.append(f"homepage lost evidence marker: {marker}")
+
+
+def check_not_found(base: Path, errors: list[str]) -> None:
+    page = base / "404.html"
+    if not page.exists():
+        errors.append(f"missing {page}")
+        return
+    source = page.read_text(encoding="utf-8")
+    signals = Signals()
+    signals.feed(source)
+
+    expected_canonical = f"{SITE_URL}404.html"
+    if signals.canonicals != [expected_canonical]:
+        errors.append(f"404 canonical mismatch: {signals.canonicals}")
+    if signals.metas.get("robots") != "noindex, nofollow":
+        errors.append("404 must be noindex, nofollow")
+    if signals.json_ld:
+        errors.append("404 must not publish JSON-LD")
+    missing_portfolio = PORTFOLIO_LINKS - set(signals.hrefs)
+    if missing_portfolio:
+        errors.append(f"404 missing portfolio links: {sorted(missing_portfolio)}")
+    for href in ("./", "./#install", "#main"):
+        if href not in signals.hrefs:
+            errors.append(f"404 missing recovery route: {href}")
+    for tag in ("main", "h1", "footer"):
+        if signals.tag_counts.get(tag, 0) != 1:
+            errors.append(f"404 expected exactly one <{tag}>, found {signals.tag_counts.get(tag, 0)}")
+    for key in ("description", "og:title", "og:description", "og:url", "twitter:card", "twitter:title", "twitter:description"):
+        if not signals.metas.get(key):
+            errors.append(f"404 missing metadata: {key}")
+    for reference in signals.hrefs + signals.srcs:
+        target = local_target(base, reference)
+        if target and not target.exists():
+            errors.append(f"404 broken local reference: {reference}")
+    for marker in ("404 / Route drift", "信号没有抵达", "2 EXPLICIT", "Network requests", "NO RESPONSE"):
+        if marker not in source:
+            errors.append(f"404 lost recovery marker: {marker}")
+    if "<script" in source:
+        errors.append("404 should remain script-free")
 
 
 def check_userscript(errors: list[str]) -> None:
@@ -180,12 +236,36 @@ def check_assets(base: Path, errors: list[str]) -> None:
         if size != (1200, 630):
             errors.append(f"OG image is {size}, expected (1200, 630)")
     version = base / "assets" / "jx" / "VERSION"
-    if not version.exists() or version.read_text(encoding="utf-8").strip() != "2.0.0":
-        errors.append("Jason DS is missing or not v2.0.0")
+    if not version.exists() or version.read_text(encoding="utf-8").strip() != "2.1.0":
+        errors.append("Jason DS is missing or not v2.1.0")
     css = (base / "assets" / "showcase.css").read_text(encoding="utf-8")
-    for marker in (":focus-visible", "prefers-reduced-motion", "@media (max-width: 640px)"):
+    for marker in (
+        ":focus-visible",
+        "prefers-reduced-motion",
+        "@media (max-width: 640px)",
+        ".demo-audit__table-wrap { overflow-x: auto; }",
+        ".demo-audit__meta { grid-template-columns: 1fr; }",
+    ):
         if marker not in css:
             errors.append(f"CSS contract missing: {marker}")
+
+    demo = (base / "assets" / "showcase.js").read_text(encoding="utf-8")
+    for marker in (
+        "auditDemoSurface",
+        "getComputedStyle",
+        "sidebarItems",
+        "markdownText",
+        "darkTextIslands",
+        "codeBlocks",
+        "lightIslands",
+        'runAudit.hidden = false',
+        'textContent = "STALE · RUN AGAIN"',
+        'auditResults?.querySelectorAll("[data-status]")',
+        'badge.dataset.status = "unknown"',
+        'badge.textContent = "STALE"',
+    ):
+        if marker not in demo:
+            errors.append(f"demo audit implementation missing: {marker}")
 
 
 def check_workflows(errors: list[str]) -> None:
@@ -193,7 +273,10 @@ def check_workflows(errors: list[str]) -> None:
     if not workflows:
         errors.append("no GitHub Actions workflows")
     for workflow in workflows:
-        for action in ACTION_RE.findall(workflow.read_text(encoding="utf-8")):
+        workflow_source = workflow.read_text(encoding="utf-8")
+        if "node --test tests/*.test.mjs" not in workflow_source:
+            errors.append(f"{workflow.name}: showcase behavior tests are not enforced")
+        for action in ACTION_RE.findall(workflow_source):
             if action.startswith(("./", "docker://")):
                 continue
             ref = action.rsplit("@", 1)[-1] if "@" in action else ""
@@ -207,12 +290,14 @@ def main() -> int:
     args = parser.parse_args()
     errors: list[str] = []
     check_page(ROOT, errors)
+    check_not_found(ROOT, errors)
     check_assets(ROOT, errors)
     check_userscript(errors)
     check_workflows(errors)
     if args.built:
         built = ROOT / "_site"
         check_page(built, errors)
+        check_not_found(built, errors)
         check_assets(built, errors)
         if not (built / "doubao-auto-system-theme.user.js").exists():
             errors.append("built artifact is missing userscript")
@@ -221,7 +306,7 @@ def main() -> int:
         for error in errors:
             print(f"  - {error}")
         return 1
-    print("OK: case page, 4 theme attrs, 5 verification nodes, 5 audit surfaces, privacy and pinned workflows")
+    print("OK: case + 404, live sample-DOM audit, explicit UNKNOWN/DEGRADED/STALE states, 4 theme attrs, 5 verification nodes, 5 audit surfaces, privacy and pinned workflows")
     return 0
 
 
