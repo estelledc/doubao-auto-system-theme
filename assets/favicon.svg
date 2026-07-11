@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">DX theme adapter</title>
+  <rect width="64" height="64" rx="14" fill="#101415"/>
+  <path d="M16 18h14c11 0 18 5 18 14s-7 14-18 14H16V18Zm10 8v12h5c4 0 7-2 7-6s-3-6-7-6h-5Z" fill="#c9f77a"/>
+  <circle cx="49" cy="15" r="5" fill="#16a394"/>
+</svg>

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101314" />
+    <meta
+      name="description"
+      content="豆包网页主题适配器公开案例：跟随系统深浅色、修复主题漂移，并用页面内审计检查侧栏、正文与代码块可读性。"
+    />
+    <title>豆包网页主题适配器｜Jason Xun</title>
+    <link rel="canonical" href="https://estelledc.github.io/doubao-auto-system-theme/" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="Jason Xun · Product Systems Builder" />
+    <meta property="og:title" content="豆包网页主题适配器｜Jason Xun" />
+    <meta
+      property="og:description"
+      content="不是一键反色，而是一条感知、同步、修补与审计的浏览器适配链路。"
+    />
+    <meta property="og:url" content="https://estelledc.github.io/doubao-auto-system-theme/" />
+    <meta
+      property="og:image"
+      content="https://estelledc.github.io/doubao-auto-system-theme/assets/og-doubao-theme.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="豆包网页主题适配器：从系统信号到可读界面的四步链路" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="豆包网页主题适配器｜Jason Xun" />
+    <meta
+      name="twitter:description"
+      content="跟随系统深浅色，修复主题漂移，并在页面内检查可读性。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://estelledc.github.io/doubao-auto-system-theme/assets/og-doubao-theme.png"
+    />
+    <link rel="stylesheet" href="assets/jx/tokens.css" />
+    <link rel="stylesheet" href="assets/jx/base.css" />
+    <link rel="stylesheet" href="assets/jx/components.css" />
+    <link rel="stylesheet" href="assets/showcase.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Doubao Web Auto Dark Mode",
+        "alternateName": "豆包网页版自动深色模式",
+        "url": "https://estelledc.github.io/doubao-auto-system-theme/",
+        "downloadUrl": "https://github.com/estelledc/doubao-auto-system-theme/blob/main/doubao-auto-system-theme.user.js",
+        "softwareVersion": "1.0.0",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "Chrome with Tampermonkey",
+        "isAccessibleForFree": true,
+        "inLanguage": ["zh-CN", "en"],
+        "author": {
+          "@type": "Organization",
+          "name": "Doubao Web Dark Mode Contributors",
+          "url": "https://github.com/estelledc/doubao-auto-system-theme"
+        },
+        "contributor": {
+          "@type": "Person",
+          "name": "Jason Xun",
+          "url": "https://estelledc.github.io/"
+        },
+        "license": "https://opensource.org/license/mit"
+      }
+    </script>
+    <script defer src="assets/showcase.js"></script>
+  </head>
+  <body>
+    <a class="jx-skip-link" href="#main">跳到主要内容</a>
+
+    <header class="case-header" aria-label="站点导航">
+      <a class="case-brand" href="https://estelledc.github.io/" aria-label="返回 Jason Xun 作品集">
+        <span aria-hidden="true">DX</span>
+        <strong>Jason Xun</strong>
+        <small>Product Systems Builder</small>
+      </a>
+      <nav class="case-nav" aria-label="桌面导航">
+        <a class="jx-return-to-hub" href="https://estelledc.github.io/">Hub</a>
+        <a href="https://estelledc.github.io/about/">About</a>
+        <a href="https://estelledc.github.io/resume/">Resume</a>
+        <a href="https://github.com/estelledc/doubao-auto-system-theme">GitHub ↗</a>
+      </nav>
+      <details class="case-menu">
+        <summary>Menu</summary>
+        <nav aria-label="移动导航">
+          <a href="https://estelledc.github.io/">Hub</a>
+          <a href="https://estelledc.github.io/about/">About</a>
+          <a href="https://estelledc.github.io/resume/">Resume</a>
+          <a href="https://github.com/estelledc/doubao-auto-system-theme">GitHub ↗</a>
+        </nav>
+      </details>
+    </header>
+
+    <main id="main">
+      <section class="jx-case-hero case-hero" aria-labelledby="case-title">
+        <div class="case-hero__copy">
+          <div class="case-meta">
+            <span class="jx-status-chip" data-status="maintained">Maintained</span>
+            <span>Browser adaptation · v1.0.0</span>
+          </div>
+          <h1 id="case-title">让网页跟着系统变暗，<em>不靠一键反色。</em></h1>
+          <p class="jx-case-hero__lede">
+            豆包网页主题适配器把一个看似简单的“深色模式”问题，拆成系统偏好感知、主题属性同步、局部可读性修补和页面内审计四个环节。
+          </p>
+          <p class="jx-case-hero__en" lang="en">
+            A focused userscript that follows the operating-system theme, repairs SPA theme drift, and audits the readability of navigation, Markdown, and code surfaces.
+          </p>
+          <div class="case-actions">
+            <a class="jx-action" href="#install">查看安装步骤</a>
+            <a
+              class="jx-action jx-action--secondary"
+              href="https://github.com/estelledc/doubao-auto-system-theme/blob/main/doubao-auto-system-theme.user.js"
+            >阅读脚本源码</a>
+          </div>
+        </div>
+
+        <div class="signal-panel" data-demo-theme="dark" aria-label="主题适配链路交互示意">
+          <div class="signal-panel__bar">
+            <span>THEME ADAPTER / LIVE SCHEMATIC</span>
+            <button type="button" data-demo-toggle aria-pressed="true">Dark signal</button>
+          </div>
+          <div class="signal-route" aria-hidden="true">
+            <div><small>01 / sense</small><strong>prefers-color-scheme</strong><span class="signal-dot"></span></div>
+            <div><small>02 / sync</small><strong>4 theme attributes</strong><span class="signal-dot"></span></div>
+            <div><small>03 / repair</small><strong>scoped UI surfaces</strong><span class="signal-dot"></span></div>
+            <div><small>04 / audit</small><strong>contrast evidence</strong><span class="signal-dot"></span></div>
+          </div>
+          <div class="surface-preview">
+            <aside>
+              <i></i><i></i><i></i><i></i>
+            </aside>
+            <article>
+              <span>Readable answer surface</span>
+              <h2>系统主题已同步</h2>
+              <p>正文、引用、表格与行内代码使用各自的语义颜色，而不是全局反色。</p>
+              <pre><code>audit.codeBlocks → pass</code></pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <dl class="case-metrics" aria-label="仓库可核验事实">
+        <div><dt>4</dt><dd>同步主题属性</dd></div>
+        <div><dt>5</dt><dd>延迟复核节点</dd></div>
+        <div><dt>5</dt><dd>页面审计表面</dd></div>
+        <div><dt>0</dt><dd>扩展权限 / @grant</dd></div>
+      </dl>
+
+      <section class="jx-case-section case-section" id="problem" aria-labelledby="problem-title">
+        <div class="jx-case-section__grid">
+          <div class="jx-case-section__heading"><span>01</span><p>Problem</p></div>
+          <div class="jx-case-section__body">
+            <h2 id="problem-title">真正的问题不是背景颜色，而是 SPA 里的主题状态会漂移。</h2>
+            <p>
+              页面启动、路由变化、异步渲染和自身脚本都可能重新写入主题属性。即使主背景变暗，侧栏标题、Markdown 正文、代码块顶栏或弹窗仍可能保留浅色表面与低对比文字。
+            </p>
+            <div class="problem-grid">
+              <article><strong>State drift</strong><p>页面重写 <code>data-theme</code> 后，局部组件回到旧状态。</p></article>
+              <article><strong>Surface leaks</strong><p>“大面积已变暗”仍可能藏着白块、黑字和不可读 token。</p></article>
+              <article><strong>Blanket overrides</strong><p>全局改写标签或使用 <code>invert()</code> 会误伤图片、品牌色与控件。</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="jx-case-section case-section case-section--dark" id="system" aria-labelledby="system-title">
+        <div class="jx-case-section__grid">
+          <div class="jx-case-section__heading"><span>02</span><p>System</p></div>
+          <div class="jx-case-section__body">
+            <h2 id="system-title">从系统信号到可读界面的四层适配链。</h2>
+            <ol class="system-list">
+              <li><span>Sense</span><div><strong>监听系统主题</strong><p><code>matchMedia('(prefers-color-scheme: dark)')</code> 提供目标状态，并响应系统变化。</p></div></li>
+              <li><span>Synchronize</span><div><strong>同时驱动 html 与 body</strong><p>同步 4 个主题属性、class 与 <code>color-scheme</code>，减少组件各读一套状态。</p></div></li>
+              <li><span>Repair</span><div><strong>只修补已知表面</strong><p>用有边界的选择器处理侧栏、Markdown、代码、输入区和浮层，不做全局反色。</p></div></li>
+              <li><span>Audit</span><div><strong>把“看起来正常”变成结构化输出</strong><p><code>__doubaoThemeAudit()</code> 返回主题属性、对比度、暗字岛、代码块和亮色残留。</p></div></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="jx-case-section case-section" id="role" aria-labelledby="role-title">
+        <div class="jx-case-section__grid">
+          <div class="jx-case-section__heading"><span>03</span><p>Role & collaboration</p></div>
+          <div class="jx-case-section__body">
+            <h2 id="role-title">公开维护责任比“谁写了多少行”更重要。</h2>
+            <div class="role-grid">
+              <article>
+                <span>Jason / maintainer</span>
+                <h3>确定问题边界与发布口径</h3>
+                <p>维护公开仓库、收敛适配范围、核验隐私与可读性边界，并对版本发布负责。</p>
+              </article>
+              <article>
+                <span>AI & tools / assisted</span>
+                <h3>放大批量实现与审计效率</h3>
+                <p>辅助选择器梳理、样式批处理、文档和自动检查；最终事实以脚本、浏览器观察和 Git 历史为准。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="jx-case-section case-section" id="evidence" aria-labelledby="evidence-title">
+        <div class="jx-case-section__grid">
+          <div class="jx-case-section__heading"><span>04</span><p>Evidence</p></div>
+          <div class="jx-case-section__body">
+            <h2 id="evidence-title">展示数字直接锁在源码契约里。</h2>
+            <div class="jx-proof evidence-board">
+              <div class="jx-proof__summary">
+                <strong>Static evidence, not adoption claims.</strong>
+                <p>这里验证的是机制存在、元数据边界和静态发布完整性，不把安装量、兼容范围或长期稳定性写成未经核验的成果。</p>
+              </div>
+              <dl class="jx-proof__metrics">
+                <div><dt>Theme state</dt><dd>4 attributes · html + body</dd></div>
+                <div><dt>Repair loop</dt><dd>MutationObserver · route hooks · 5 delayed checks</dd></div>
+                <div><dt>Audit output</dt><dd>sidebar · Markdown · text islands · code · light islands</dd></div>
+                <div><dt>Privacy</dt><dd><code>@grant none</code> · no network request API</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="jx-case-section case-section" id="install" aria-labelledby="install-title">
+        <div class="jx-case-section__grid">
+          <div class="jx-case-section__heading"><span>05</span><p>Try it</p></div>
+          <div class="jx-case-section__body">
+            <h2 id="install-title">当前提供可审查的手动安装路径。</h2>
+            <ol class="install-list">
+              <li><span>01</span><p>在 Chrome 安装 Tampermonkey。</p></li>
+              <li><span>02</span><p>打开仓库中的 <a href="https://github.com/estelledc/doubao-auto-system-theme/blob/main/doubao-auto-system-theme.user.js">用户脚本源码</a>。</p></li>
+              <li><span>03</span><p>在 Tampermonkey 新建脚本，粘贴全文并保存。</p></li>
+              <li><span>04</span><p>打开豆包聊天页，切换系统外观；需要排查时运行 <code>__doubaoThemeAudit()</code>。</p></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-limitations" id="limitations" aria-labelledby="limitations-title">
+        <div>
+          <p class="case-kicker">06 / Limitations</p>
+          <h2 id="limitations-title">适配器依赖外部页面结构，失效是需要被设计的状态。</h2>
+        </div>
+        <div class="jx-case-limit">
+          <p>
+            这是个人维护的非官方用户脚本，只覆盖 Chrome + Tampermonkey 与 <code>doubao.com/chat/*</code>。豆包改版后，选择器与主题变量可能需要更新；页面没有真实安装量、长期稳定性或完整浏览器矩阵证据，也不承诺永久兼容。
+          </p>
+          <p>
+            脚本不读取、保存或上传聊天内容，元数据声明 <code>@grant none</code>；但安装任何用户脚本前，仍应先阅读源码并确认权限范围。
+          </p>
+        </div>
+      </section>
+
+      <section class="case-closing" aria-labelledby="closing-title">
+        <div><p class="case-kicker">Next / inspect the work</p><h2 id="closing-title">从源码看适配边界，从作品集看完整系统。</h2></div>
+        <div class="case-actions">
+          <a class="jx-action" href="https://github.com/estelledc/doubao-auto-system-theme">GitHub repository</a>
+          <a class="jx-action jx-action--secondary" href="https://estelledc.github.io/resume/">Resume</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="jx-footer case-footer">
+      <div><strong>Jason Xun</strong><span>Product systems · AI orchestration · full-stack delivery</span></div>
+      <nav aria-label="页脚导航">
+        <a href="https://estelledc.github.io/">Hub</a>
+        <a href="https://estelledc.github.io/about/">About</a>
+        <a href="https://estelledc.github.io/resume/">Resume</a>
+        <a href="https://github.com/estelledc">GitHub</a>
+      </nav>
+    </footer>
+  </body>
+</html>

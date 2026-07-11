@@ -1,0 +1,40 @@
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+
+      - name: Validate JavaScript syntax
+        run: |
+          node --check doubao-auto-system-theme.user.js
+          node --check assets/showcase.js
+
+      - name: Validate source showcase contract
+        run: python3 scripts/check_showcase.py
+
+      - name: Build explicit Pages artifact
+        run: python3 scripts/build_site.py
+
+      - name: Validate built artifact
+        run: python3 scripts/check_showcase.py --built
+
+      - name: Validate Python syntax
+        run: python3 -m py_compile scripts/*.py
