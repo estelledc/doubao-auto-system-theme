@@ -236,8 +236,8 @@ def check_assets(base: Path, errors: list[str]) -> None:
         if size != (1200, 630):
             errors.append(f"OG image is {size}, expected (1200, 630)")
     version = base / "assets" / "jx" / "VERSION"
-    if not version.exists() or version.read_text(encoding="utf-8").strip() != "2.1.0":
-        errors.append("Jason DS is missing or not v2.1.0")
+    if not version.exists() or version.read_text(encoding="utf-8").strip() != "2.2.0":
+        errors.append("Jason DS is missing or not v2.2.0")
     css = (base / "assets" / "showcase.css").read_text(encoding="utf-8")
     for marker in (
         ":focus-visible",
@@ -248,6 +248,20 @@ def check_assets(base: Path, errors: list[str]) -> None:
     ):
         if marker not in css:
             errors.append(f"CSS contract missing: {marker}")
+    for pattern, label in (
+        (r"\btransition\s*:\s*all\b", "transition: all"),
+        (r"\bscale\(\s*0(?:\.0+)?\s*\)", "scale(0)"),
+        (r"transition-duration:\s*0\.01ms", "global zero-duration motion reset"),
+    ):
+        if re.search(pattern, css, re.I):
+            errors.append(f"CSS motion contract forbids: {label}")
+    for marker in (
+        ".signal-panel__bar button:active",
+        "background-color var(--jx-duration-popover) var(--jx-ease-out)",
+        "[data-status] { transition: color",
+    ):
+        if marker not in css:
+            errors.append(f"CSS motion contract missing: {marker}")
 
     demo = (base / "assets" / "showcase.js").read_text(encoding="utf-8")
     for marker in (
