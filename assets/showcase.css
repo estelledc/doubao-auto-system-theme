@@ -205,7 +205,9 @@ main {
   background: var(--case-night);
   box-shadow: 0 32px 80px rgba(18, 24, 24, 0.26);
   color: #edf4ef;
-  transition: background 180ms ease, color 180ms ease;
+  transition: background-color var(--jx-duration-popover) var(--jx-ease-out),
+              border-color var(--jx-duration-popover) var(--jx-ease-out),
+              color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 .signal-panel[data-demo-theme="light"] {
@@ -235,6 +237,14 @@ main {
   color: inherit;
   font: inherit;
   cursor: pointer;
+  transition: transform var(--jx-duration-press) var(--jx-ease-out),
+              background-color var(--jx-duration-fast) var(--jx-ease-out),
+              border-color var(--jx-duration-fast) var(--jx-ease-out),
+              color var(--jx-duration-fast) var(--jx-ease-out);
+}
+
+.signal-panel__bar button:active {
+  transform: scale(var(--jx-press-scale));
 }
 
 .signal-controls {
@@ -261,6 +271,7 @@ main {
   min-height: 96px;
   padding-right: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.22);
+  transition: border-color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .signal-route > div {
@@ -288,6 +299,7 @@ main {
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  transition: color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .signal-route small {
@@ -309,6 +321,8 @@ main {
   border: 2px solid var(--case-night);
   border-radius: 50%;
   background: var(--case-lime);
+  transition: background-color var(--jx-duration-popover) var(--jx-ease-out),
+              border-color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .signal-dot {
@@ -325,6 +339,8 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 13px;
   background: #1a1f20;
+  transition: background-color var(--jx-duration-popover) var(--jx-ease-out),
+              border-color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .surface-preview {
@@ -338,6 +354,7 @@ main {
   gap: 0.8rem;
   padding: 1.2rem 0.8rem;
   background: #0c1011;
+  transition: background-color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .surface-preview aside {
@@ -349,6 +366,7 @@ main {
   height: 28px;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.07);
+  transition: background-color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .surface-preview aside i {
@@ -365,6 +383,7 @@ main {
   font-size: 0.65rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  transition: color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .surface-preview article > span {
@@ -381,6 +400,7 @@ main {
 .surface-preview p {
   color: #b8c2bd;
   font-size: 0.9rem;
+  transition: color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 [data-demo-theme="light"] .surface-preview p {
@@ -395,6 +415,9 @@ main {
   border-radius: 8px;
   background: #090c0d;
   color: var(--case-lime);
+  transition: background-color var(--jx-duration-popover) var(--jx-ease-out),
+              border-color var(--jx-duration-popover) var(--jx-ease-out),
+              color var(--jx-duration-popover) var(--jx-ease-out);
 }
 
 .demo-audit {
@@ -451,6 +474,7 @@ main {
   overflow-wrap: anywhere;
 }
 
+[data-status] { transition: color var(--jx-duration-fast) var(--jx-ease-out); }
 [data-status="pass"] { color: #a6ef83; }
 [data-status="unknown"] { color: #f0c174; }
 [data-status="degraded"],
@@ -1100,13 +1124,9 @@ pre {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  .signal-panel__bar button,
+  .signal-panel__bar button:active {
+    transform: none;
   }
 }
 

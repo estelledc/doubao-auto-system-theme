@@ -4,6 +4,15 @@ import test from "node:test";
 import vm from "node:vm";
 
 const SOURCE = readFileSync(new URL("../assets/showcase.js", import.meta.url), "utf8");
+const CSS = readFileSync(new URL("../assets/showcase.css", import.meta.url), "utf8");
+
+test("theme motion keeps semantic color feedback without global resets", () => {
+  assert.match(CSS, /background-color var\(--jx-duration-popover\) var\(--jx-ease-out\)/);
+  assert.match(CSS, /\.signal-panel__bar button:active/);
+  assert.match(CSS, /\[data-status\] \{ transition: color/);
+  assert.doesNotMatch(CSS, /transition-duration:\s*0\.01ms/);
+  assert.doesNotMatch(CSS, /\btransition\s*:\s*all\b/);
+});
 
 function bootDemo({ audited }) {
   const handlers = new Map();
